@@ -26,7 +26,7 @@ bool isSoundexLengthValid(const std::string& soundex) {
  
 std::pair<std::string, char> addSoundexCode(const std::string& soundex, char code, char prevCode) {
     std::string newSoundex = soundex;
-    if (isValidCode(code, prevCode) && isSoundexLengthValid(soundex)) {
+    if (isCodeValid(code, prevCode) && isSoundexLengthValid(soundex)) {
         newSoundex += code;
         prevCode = code;
     }
