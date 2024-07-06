@@ -17,10 +17,6 @@ char getSoundexCode(char c) {
     return (it != soundexMap.end()) ? it->second : '0';
 }
 
-bool isCodeValid(char code, char prevCode) {
-    return code != '0' && code != prevCode;
-}
-
 std::string generateSoundex(const std::string& name) {
     if (name.empty()) return "";
 
@@ -29,7 +25,7 @@ std::string generateSoundex(const std::string& name) {
 
     for (size_t i = 1; i < name.length() && soundex.length() < 4; ++i) {
         char code = getSoundexCode(name[i]);
-        if (isCodeValid(code, prevCode)) {
+        if (code != '0' && code != prevCode) {
             soundex += code;
             prevCode = code;
         }
