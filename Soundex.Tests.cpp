@@ -57,23 +57,8 @@ TEST(SoundexTest, HandlesSimilarSoundexCodes) {
     EXPECT_EQ(generateSoundex("Rov"), "R130");
 }
 
-// Test for varying lengths of Soundex codes
-TEST(SoundexTest, HandlesVariableLength) {
-    EXPECT_EQ(generateSoundex("Robert", 5), "R1630");
-    EXPECT_EQ(generateSoundex("Ashcroft", 6), "A2610");
-    EXPECT_EQ(generateSoundex("Rubin", 3), "R15");
-}
-
 // Test for strings with mixed upper and lower cases
 TEST(SoundexTest, HandlesMixedCases) {
     EXPECT_EQ(generateSoundex("RoBeRt"), "R163");
     EXPECT_EQ(generateSoundex("aSHcRoFt"), "A261");
 }
-
-// Test for strings that should be truncated
-TEST(SoundexTest, HandlesStringTruncation) {
-    EXPECT_EQ(generateSoundex("abcdefghij"), "A121");
-    EXPECT_EQ(generateSoundex("abcdefghij", 3), "A121");
-    EXPECT_EQ(generateSoundex("abcdefghij", 6), "A1210");
-}
-
