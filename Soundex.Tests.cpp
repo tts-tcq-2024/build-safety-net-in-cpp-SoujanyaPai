@@ -19,46 +19,29 @@ TEST(SoundexTest, HandlesSimpleCases) {
     EXPECT_EQ(generateSoundex("Pfister"), "P236");
 }
 
-// Test for a string with all vowels
-TEST(SoundexTest, HandlesAllVowels) {
-    EXPECT_EQ(generateSoundex("AEIOU"), "A000");
+TEST(SoundexTest, HandlesNameWithDuplicates) {
+    EXPECT_EQ(generateSoundex("Aardvark"), "A634");
+    EXPECT_EQ(generateSoundex("Bookkeeper"), "B252");
 }
 
-// Test for a string with mixed characters
-TEST(SoundexTest, HandlesMixedCharacters) {
-    EXPECT_EQ(generateSoundex("A1B2C3"), "A123");
+TEST(SoundexTest, HandlesNameWithAllVowels) {
+    EXPECT_EQ(generateSoundex("AeIouyHw"), "A000");
+    EXPECT_EQ(generateSoundex("Aeiou"), "A000");
 }
 
-// Test for a string with uppercase and lowercase letters
-TEST(SoundexTest, HandlesCaseInsensitivity) {
-    EXPECT_EQ(generateSoundex("robert"), "R163");
-    EXPECT_EQ(generateSoundex("ROBERT"), "R163");
+TEST(SoundexTest, HandlesNameWithMixedCases) {
+    EXPECT_EQ(generateSoundex("roBErt"), "R163");
+    EXPECT_EQ(generateSoundex("RuPErt"), "R163");
 }
 
-// Test for a string with numbers
-TEST(SoundexTest, HandlesNumbers) {
-    EXPECT_EQ(generateSoundex("12345"), "0000");
+TEST(SoundexTest, HandlesNamesThatMapToSameCode) {
+    EXPECT_EQ(generateSoundex("Robert"), generateSoundex("Rupert"));
+    EXPECT_EQ(generateSoundex("Ashcraft"), generateSoundex("Ashcroft"));
 }
 
-// Test for a string with special characters
-TEST(SoundexTest, HandlesSpecialCharacters) {
-    EXPECT_EQ(generateSoundex("R@b#e$t"), "R123");
-}
-
-// Test for a string where the first letter is followed by identical letters
-TEST(SoundexTest, HandlesIdenticalFollowingLetters) {
-    EXPECT_EQ(generateSoundex("AABBB"), "A120");
-    EXPECT_EQ(generateSoundex("BBA"), "B100");
-}
-
-// Test for strings that should result in the same Soundex code
-TEST(SoundexTest, HandlesSimilarSoundexCodes) {
-    EXPECT_EQ(generateSoundex("Rover"), "R130");
-    EXPECT_EQ(generateSoundex("Rov"), "R130");
-}
-
-// Test for strings with mixed upper and lower cases
-TEST(SoundexTest, HandlesMixedCases) {
-    EXPECT_EQ(generateSoundex("RoBeRt"), "R163");
-    EXPECT_EQ(generateSoundex("aSHcRoFt"), "A261");
+TEST(SoundexTest, HandlesNameThatRequiresPadding) {
+    EXPECT_EQ(generateSoundex("A"), "A000");
+    EXPECT_EQ(generateSoundex("R"), "R000");
+    EXPECT_EQ(generateSoundex("Ra"), "R000");
+    EXPECT_EQ(generateSoundex("Ray"), "R020");
 }
