@@ -17,19 +17,40 @@ char getSoundexCode(char c) {
     return (it != soundexMap.end()) ? it->second : '0';
 }
 
-std::string generateSoundex(const std::string& name) {
-    if (name.empty()) return "";
-
-    std::string soundex(1, toupper(name[0]));
-    char prevCode = getSoundexCode(name[0]);
-
-    for (size_t i = 1; i < name.length() && soundex.length() < 4; ++i) {
-        char code = getSoundexCode(name[i]);
-        if (code != '0' && code != prevCode) {
-            soundex += code;
-            prevCode = code;
-        }
+bool isCodeValid(char code, char prevCode) {
+    return code != '0' && code != prevCode;
+}
+ 
+bool isSoundexLengthValid(const std::string& soundex) {
+    return soundex.length() < 4;
+}
+ 
+std::pair<std::string, char> addSoundexCode(const std::string& soundex, char code, char prevCode) {
+    std::string newSoundex = soundex;
+    if (isCodeValid(code, prevCode) && isSoundexLengthValid(soundex)) {
+        newSoundex += code;
+        prevCode = code;
     }
-    soundex.resize(4, '0');
-    return soundex;
+    return {newSoundex, prevCode};
+}
+ 
+std::string updateSoundex(const std::string& soundex, const std::string& name, char prevCode) {
+    std::string newSoundex = soundex;
+    for (size_t i = 1; i < name.size(); ++i) {
+        char code = getSoundexCode(name[i]);
+        auto result = addSoundexCode(newSoundex, code, prevCode);
+        newSoundex = result.first;
+        prevCode = result.second;
+    }
+    newSoundex.append(4 - newSoundex.size(), '0');
+    return newSoundex;
+}
+ 
+std::string generateSoundex(const std::string& name) {
+    if (name.empty()) {
+        return "";
+    }
+    std::string soundex(1, std::toupper(name[0]));
+    char prevCode = getSoundexCode(soundex[0]);
+    return updateSoundex(soundex, name, prevCode);
 }
