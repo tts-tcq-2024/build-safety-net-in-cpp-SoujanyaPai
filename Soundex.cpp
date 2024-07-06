@@ -31,10 +31,15 @@ char getSoundexCode(char c) {
         '2', // Y
         '2'  // Z
     };
-    return std::isalpha(c) ? soundexArray[toupper(c) - 'A'] : '0';
+    if (std::isalpha(c)) {
+        return soundexArray[toupper(c) - 'A'];
+    }
+    return '0';
 }
 
-std::string extractSoundexCode(const std::string& name) {
+std::string generateSoundex(const std::string& name) {
+    if (name.empty()) return "";
+
     std::string soundex(1, toupper(name[0]));
     char prevCode = getSoundexCode(name[0]);
 
@@ -46,14 +51,6 @@ std::string extractSoundexCode(const std::string& name) {
         }
         if (soundex.length() == 4) break;
     }
-
-    return soundex;
-}
-
-std::string generateSoundex(const std::string& name) {
-    if (name.empty()) return "";
-    
-    std::string soundex = extractSoundexCode(name);
     soundex.resize(4, '0');
     return soundex;
 }
