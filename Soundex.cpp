@@ -42,7 +42,7 @@ std::string updateSoundex(const std::string& soundex, const std::string& name, c
         newSoundex = result.first;
         prevCode = result.second;
     }
-    newSoundex.append(4 - newSoundex.size(), '0');
+    newSoundex.resize(4, '0');
     return newSoundex;
 }
  
