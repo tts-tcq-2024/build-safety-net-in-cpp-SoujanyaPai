@@ -31,12 +31,7 @@ char getSoundexCode(char c) {
         '2', // Y
         '2'  // Z
     };
-
-    if (std::isalpha(c)) {
-        c = toupper(c);
-        return soundexArray[c - 'A'];
-    }
-    return '0';
+    return std::isalpha(c) ? soundexArray[toupper(c) - 'A'] : '0';
 }
 
 std::string generateSoundex(const std::string& name) {
@@ -45,12 +40,13 @@ std::string generateSoundex(const std::string& name) {
     std::string soundex(1, toupper(name[0]));
     char prevCode = getSoundexCode(name[0]);
 
-    for (size_t i = 1; i < name.length() && soundex.length() < 4; ++i) {
-        char code = getSoundexCode(name[i]);
+    for (char c : name.substr(1)) {
+        char code = getSoundexCode(c);
         if (code != '0' && code != prevCode) {
             soundex += code;
             prevCode = code;
         }
+        if (soundex.length() == 4) break;
     }
     soundex.resize(4, '0');
     return soundex;
