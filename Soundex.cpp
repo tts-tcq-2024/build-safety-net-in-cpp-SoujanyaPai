@@ -4,7 +4,7 @@
 
 std::string generateSoundex(const std::string& name)
 {
-    std::string soundexCode[0] = toupper(name[0]);
+    std::string soundex(1, toupper(name[0]));
 
     int matchCount = 1;
     int codeCount = 1;
