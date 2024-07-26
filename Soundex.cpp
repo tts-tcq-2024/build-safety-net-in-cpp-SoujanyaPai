@@ -2,32 +2,53 @@
 #include <cctype>
 #include <string>
 
-char getSoundexCode(char c) {
-    c = toupper(c);
-    if (c == 'B' || c == 'F' || c == 'P' || c == 'V') return '1';
-    if (c == 'C' || c == 'G' || c == 'J' || c == 'K' || c == 'Q' || c == 'S' || c == 'X' || c == 'Z') return '2';
-    if (c == 'D' || c == 'T') return '3';
-    if (c == 'L') return '4';
-    if (c == 'M' || c == 'N') return '5';
-    if (c == 'R') return '6';
-    return '0'; // For A, E, I, O, U, H, W, Y
-}
+std::string generateSoundex(const std::string& name)
+{
+    std::string soundexCode[0] = toupper(name[0]);
 
-std::string generateSoundex(const std::string& name) {
-    if (name.empty()) return "";
-
-    std::string soundex(1, toupper(name[0]));
-    char prevCode = getSoundexCode(name[0]);
-
-    for (size_t i = 1; i < name.length() && soundex.length() < 4; ++i) {
-        char code = getSoundexCode(name[i]);
-        if (code != '0' && code != prevCode) {
-            soundex += code;
-            prevCode = code;
+    int matchCount = 1;
+    int codeCount = 1;
+    while((matchCount < strlen(name)) && (codeCount < 4))
+    {
+        if(((name[matchCount] == 'b') || (name[matchCount] == 'p') || (name[matchCount] == 'v') || (name[matchCount] == 'f')) && (soundexCode[codeCount-1] != 1))
+        {
+            soundexCode[codeCount] = '1';
+            codeCount++;
         }
+        else if(((name[matchCount] == 'c') || (name[matchCount] == 'g') || (name[matchCount] == 'j') || (name[matchCount] == 'k') || (name[matchCount] == 'q') || (name[matchCount] == 's') || (name[matchCount] == 'x') || (name[matchCount] == 'z')) && (soundexCode[codeCount-1] != 2))
+        {
+            soundexCode[codeCount] = '2';
+            codeCount++;
+        }
+        else if(((name[matchCount] == 'd') || (name[matchCount] == 't')) && (soundexCode[codeCount-1] != 3))
+        {
+            soundexCode[codeCount] = '3';
+            codeCount++;
+        }
+        else if((name[matchCount] == 'l') && (soundexCode[codeCount-1] != 4))
+        {
+            soundexCode[codeCount] = '4';
+            codeCount++;
+        }
+        else if(((name[matchCount] == 'm') || (name[matchCount] == 'n')) && (soundexCode[codeCount-1] != 5))
+        {
+            soundexCode[codeCount] = '5';
+            codeCount++;
+        }
+        else if((name[matchCount] == 'r') && (soundexCode[codeCount-1] != 6))
+        {
+            soundexCode[codeCount] = '6';
+            codeCount++;
+        }
+        matchCount++;
     }
 
-    soundex.resize(4, '0');
-    return soundex;
-}
+    while(codeCount < 4)
+    {
+        soundexCode[codeCount] = 0;
+        codeCount++;
+    }
+    soundexCode[4] = '\0';
 
+    return soundexCode;
+}
