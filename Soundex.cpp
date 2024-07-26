@@ -8,7 +8,7 @@ std::string generateSoundex(const std::string& name)
 
     int matchCount = 1;
     int codeCount = 1;
-    while((matchCount < strlen(name)) && (codeCount < 4))
+    while((matchCount < name.length()) && (codeCount < 4))
     {
         if(((name[matchCount] == 'b') || (name[matchCount] == 'p') || (name[matchCount] == 'v') || (name[matchCount] == 'f')) && (soundexCode[codeCount-1] != 1))
         {
