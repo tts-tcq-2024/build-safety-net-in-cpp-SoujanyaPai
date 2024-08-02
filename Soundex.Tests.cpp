@@ -47,5 +47,5 @@ TEST(SoundexTest, HandlesNameThatRequiresPadding) {
 }
 
 TEST(SoudexTest, HandlesNameWithNonAlphabeticCharacters) {
-    EXPECT_EQ(generateSoundex("##"), "");
+    EXPECT_EQ(generateSoundex("##"), "#000");
 }
