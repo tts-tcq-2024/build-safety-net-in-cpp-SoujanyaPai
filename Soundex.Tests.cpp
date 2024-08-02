@@ -46,6 +46,6 @@ TEST(SoundexTest, HandlesNameThatRequiresPadding) {
     EXPECT_EQ(generateSoundex("Ray"), "R000");
 }
 
-TEST(SoudexTest, HandlesNameWithNonAlphabeticCharacters) {
-    EXPECT_EQ(generateSoundex("##"), "#000");
+TEST(SoudexTest, HandlesNameWithEmptySpace) {
+    EXPECT_EQ(generateSoundex("a bcd"), "A123");
 }
