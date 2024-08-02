@@ -45,3 +45,7 @@ TEST(SoundexTest, HandlesNameThatRequiresPadding) {
     EXPECT_EQ(generateSoundex("Ra"), "R000");
     EXPECT_EQ(generateSoundex("Ray"), "R000");
 }
+
+TEST(SoudexTest, HandlesNameWithNonAlphabeticCharacters) {
+    EXPECT_EQ(generateSoundex("##"), "");
+}
